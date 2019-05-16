@@ -1,8 +1,8 @@
 # orchestration-samples
 
 Here I'll implement small distributed system to deploy it into azure:
-- [ ] kubernetes
-- [ ] azure service farbric
+- [ ] kubernetes (AKS)
+- [ ] service farbric (ASF)
 
 Azure configuration instructions:
 - [ ] TODO
