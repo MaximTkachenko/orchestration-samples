@@ -6,3 +6,8 @@ Here I'll implement small distributed system using .netcore to deploy it into Az
 
 Azure configuration instructions:
 - [ ] TODO
+
+Need to implement: 
+- [ ] different environments (staging, production, etc.)
+- [ ] CI, CD
+- [ ] storage for secrets
