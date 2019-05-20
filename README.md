@@ -11,3 +11,6 @@ Need to implement:
 - [ ] different environments (staging, production, etc.)
 - [ ] CI, CD
 - [ ] storage for secrets
+- [ ] autoscaling
+- [ ] metrics (CPU, memory, thredpool state etc.)
+- [ ] logging
