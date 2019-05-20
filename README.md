@@ -7,10 +7,13 @@ Here I'll implement small distributed system using .netcore to deploy it into Az
 Azure configuration instructions:
 - [ ] TODO
 
-Need to implement: 
+Check list: 
 - [ ] different environments (staging, production, etc.)
 - [ ] CI, CD
 - [ ] storage for secrets
 - [ ] autoscaling
 - [ ] metrics (CPU, memory, thredpool state etc.)
 - [ ] logging
+- [ ] debugging
+- [ ] profiling
+- [ ] make a dump
