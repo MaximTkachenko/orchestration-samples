@@ -17,3 +17,4 @@ Check list:
 - [ ] debugging
 - [ ] profiling
 - [ ] make a dump
+- [ ] healthchecks
