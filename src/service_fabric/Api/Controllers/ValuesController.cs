@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Models;
+using BackService.Messaging;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
 
 namespace Api.Controllers
 {
@@ -10,36 +13,31 @@ namespace Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly IPersonService _personService;
+
+        public ValuesController()
         {
-            return new string[] { "value1", "value2" };
+            _personService = ServiceProxy.Create<IPersonService>(new Uri("fabric:/AsfSample/BackService"));
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        // GET api/values
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            return "value";
+            return Ok((await _personService.GetPersons()).Select(x => x.Id).ToArray());
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] PostViewModel model)
         {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            await _personService.CreatePerson(new PersonModel
+            {
+                Id = Guid.NewGuid(),
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            });
+            return Ok();
         }
     }
 }

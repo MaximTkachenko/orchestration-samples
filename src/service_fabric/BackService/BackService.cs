@@ -4,7 +4,9 @@ using System.Fabric;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BackService.Messaging;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace BackService
@@ -12,8 +14,10 @@ namespace BackService
     /// <summary>
     /// An instance of this class is created for each service instance by the Service Fabric runtime.
     /// </summary>
-    internal sealed class BackService : StatelessService
+    internal sealed class BackService : StatelessService, IPersonService
     {
+        private readonly List<PersonModel> _persons = new List<PersonModel>();
+
         public BackService(StatelessServiceContext context)
             : base(context)
         { }
@@ -24,7 +28,7 @@ namespace BackService
         /// <returns>A collection of listeners.</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            return new ServiceInstanceListener[0];
+            return this.CreateServiceRemotingInstanceListeners();
         }
 
         /// <summary>
@@ -46,6 +50,17 @@ namespace BackService
 
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
             }
+        }
+
+        public Task CreatePerson(PersonModel person)
+        {
+            _persons.Add(person);
+            return Task.CompletedTask;
+        }
+
+        public Task<PersonModel[]> GetPersons()
+        {
+            return Task.FromResult(_persons.ToArray());
         }
     }
 }
