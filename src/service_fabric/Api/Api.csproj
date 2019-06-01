@@ -16,8 +16,4 @@
     <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="3.3.658" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BackService.Messaging\BackService.Messaging.csproj" />
-  </ItemGroup>
-
 </Project>
