@@ -9,7 +9,7 @@ Azure configuration instructions:
 
 Check list: 
 - [ ] different environments (staging, production, etc.)
-- [ ] CI, CD
+- [ ] CI, CD in azure devops
 - [ ] storage for secrets
 - [ ] autoscaling
 - [ ] metrics (CPU, memory, thredpool state etc.)
