@@ -1,0 +1,63 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "mtk-sf-cluster"
+    },
+    "adminUserName": {
+      "value": "mtkadmin"
+    },
+    "adminPassword": {
+      "value": "P@ssw0rd1111"
+    },
+    "vmImagePublisher": {
+      "value": "MicrosoftWindowsServer"
+    },
+    "vmImageOffer": {
+      "value": "WindowsServer"
+    },
+    "vmImageSku": {
+      "value": "2016-Datacenter-with-Containers"
+    },
+    "vmImageVersion": {
+      "value": "latest"
+    },
+    "loadBalancedAppPort1": {
+      "value": 80
+    },
+    "loadBalancedAppPort2": {
+      "value": 443
+    },
+    "clusterProtectionLevel": {
+      "value": "EncryptAndSign"
+    },
+    "certificateStoreValue": {
+      "value": "My"
+    },
+    "certificateThumbprint": {
+      "value": "8284840E11ACDA95F31A7797A334992924F8BAEB"
+    },
+    "sourceVaultValue": {
+      "value": "/subscriptions/4191b0ab-271d-470c-850c-3583bfb5ec22/resourceGroups/mtk-rg/providers/Microsoft.KeyVault/vaults/mtk-kv"
+    },
+    "certificateUrlValue": {
+      "value": "https://mtk-kv.vault.azure.net/secrets/mtk-sf-cert/784473df38f64782897acfd413903f04"
+    },
+    "storageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "supportLogStorageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "applicationDiagnosticsStorageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "nt0InstanceCount": {
+      "value": 5
+    },
+    "vmNodeType0Size": {
+      "value": "Standard_D2_V2"
+    }
+  }
+}
