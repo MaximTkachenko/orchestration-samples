@@ -1,11 +1,8 @@
 # orchestration-samples
 
 Small distributed system using .netcore deployed into Azure:
-- [ ] [kubernetes (AKS) + docker](https://github.com/MaximTkachenko/orchestration-samples/tree/master/src/kubernetes)
-- [ ] [service farbric (ASF)](https://github.com/MaximTkachenko/orchestration-samples/tree/master/src/service_fabric)
-
-Azure configuration instructions:
-- [ ] TODO
+- [ ] [kubernetes (AKS) + docker](https://github.com/MaximTkachenko/orchestration-samples/tree/master/k8s)
+- [ ] [service farbric (ASF)](https://github.com/MaximTkachenko/orchestration-samples/tree/master/servicefabric)
 
 Check list: 
 - [ ] different environments (staging, production, etc.)

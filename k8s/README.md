@@ -23,4 +23,4 @@ az group deployment create --name queuedeployment --resource-group mtk-ak8s --te
 az group deployment create --name k8sdeployment --resource-group mtk-ak8s  --template-file k8sdeploy.json --parameters k8sdeploy.parameters.json
 ```
 
-
+## Configure azure devops pipelines

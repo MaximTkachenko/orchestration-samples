@@ -1,6 +1,6 @@
 [Azure Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates)
 
-## Steps to run:
+## Install resources:
 1. manually create key-vault, enable access policies (`Azure Virtual Machines for deployment`, `Azure Resource Manager for template deployment`), create self-signed certificate, update certificate parameters in `arm\sf\sfdeploy.parameters.json`
 2. cleanup if needed 
 ```
@@ -23,4 +23,7 @@ az group deployment create --name queuedeployment --resource-group mtk-asf --tem
 az group deployment create --name sfdeployment --resource-group mtk-asf  --template-file sfdeploy.json --parameters sfdeploy.parameters.json
 ```
 
+## Configure azure devops pipelines
 
+
+## Configure gateway
