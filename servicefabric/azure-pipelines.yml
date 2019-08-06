@@ -10,7 +10,6 @@ variables:
   BuildConfiguration: 'Release'
   Solution: 'src/SfSample.sln'
   ServiceFabricProject: 'src/SfSampleApp/SfSampleApp.sfproj'
-  BuildPlatform: 'x64'
 
 steps:
 - task: NuGetToolInstaller@0
