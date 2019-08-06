@@ -5,6 +5,7 @@ Small distributed system using .netcore deployed into Azure:
 - [ ] [service farbric (ASF)](https://github.com/MaximTkachenko/orchestration-samples/tree/master/servicefabric)
 
 Check list: 
+- [ ] scaling and changing cluster
 - [ ] different environments (staging, production, etc.)
 - [ ] CI, CD in azure devops
 - [ ] storage for secrets

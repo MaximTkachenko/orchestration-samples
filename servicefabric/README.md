@@ -27,3 +27,8 @@ az group deployment create --name sfdeployment --resource-group mtk-asf  --templ
 
 
 ## Configure gateway
+
+
+## TODO
+1. try to [Set up Azure Active Directory for client authentication](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-creation-setup-aad)
+2. try separate certificates for server and client
