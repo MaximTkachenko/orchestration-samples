@@ -1,4 +1,4 @@
-﻿﻿<#
+﻿<#
 .VERSION
 1.0.4
 
@@ -91,7 +91,7 @@ Param
 
 Write-Host 'TenantId = ' $TenantId
 
-. "$PSScriptRoot\common.applications.ps1"
+. "$PSScriptRoot\Common.ps1"
 
 $graphAPIFormat = $resourceUrl + "/" + $TenantId + "/{0}?api-version=1.5"
 $ConfigObj = @{}
