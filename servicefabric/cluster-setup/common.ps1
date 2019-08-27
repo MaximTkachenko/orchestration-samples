@@ -59,7 +59,13 @@ function CreateSelfSignedCertificate([string]$DnsName)
 {
     Write-Host "Creating self-signed certificate with dns name $DnsName"
     
-    $filePath = "$PSScriptRoot\$DnsName.pfx"
+    $folder = "$PSScriptRoot\certificate_details"
+    If(!(test-path $folder))
+    {
+        New-Item -ItemType Directory -Force -Path $folder
+    }
+
+    $filePath = "$folder\$DnsName.pfx"
 
     Write-Host "  generating password... " -NoNewline
     $certPassword = GeneratePassword
@@ -70,11 +76,11 @@ function CreateSelfSignedCertificate([string]$DnsName)
     $thumbprint = (New-SelfSignedCertificate -DnsName $DnsName -CertStoreLocation Cert:\CurrentUser\My -KeySpec KeyExchange).Thumbprint
     Write-Host "$thumbprint."
     
-    Write-Host "  exporting to $filePath..."
+    Write-Host "  exporting to $folder..."
     $certContent = (Get-ChildItem -Path cert:\CurrentUser\My\$thumbprint)
     $t = Export-PfxCertificate -Cert $certContent -FilePath $filePath -Password $securePassword
-    Set-Content -Path "$PSScriptRoot\$DnsName.thumb.txt" -Value $thumbprint
-    Set-Content -Path "$PSScriptRoot\$DnsName.pwd.txt" -Value $certPassword
+    Set-Content -Path "$folder\$DnsName.thumb.txt" -Value $thumbprint
+    Set-Content -Path "$folder\$DnsName.pwd.txt" -Value $certPassword
     Write-Host "  exported."
 
     $thumbprint
