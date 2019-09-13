@@ -19,7 +19,7 @@ $keyVault = New-AzureRmKeyVault -VaultName $vaultName -ResourceGroupName $Resour
 Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName -ResourceGroupName $ResourceGroupName -EnabledForTemplateDeployment -EnabledForDeployment
 
 Write-Host "Creating certificate..."
-$policy = New-AzureKeyVaultCertificatePolicy -SubjectName "CN=$Name.$Location.cloudapp.azure.com" -IssuerName Self   -ValidityInMonths 12
+$policy = New-AzureKeyVaultCertificatePolicy -SubjectName "CN=$Name.$Location.cloudapp.azure.com" -IssuerName Self -ValidityInMonths 12
 $certificateName = "$Name-cert"
 Add-AzureKeyVaultCertificate -VaultName $vaultName -Name $certificateName -CertificatePolicy $policy 
 
@@ -47,10 +47,32 @@ $armParameters = @{
     aadClusterApplicationId = $configObj.WebAppId;
     aadClientApplicationId = $configObj.NativeClientAppId;
   }
-
 New-AzureRmResourceGroupDeployment `
   -ResourceGroupName $ResourceGroupName `
   -TemplateFile "$PSScriptRoot\servicefabric.json" `
   -Mode Incremental `
   -TemplateParameterObject $armParameters `
+  -Verbose
+
+$dbParameters = @{
+  sqlAdministratorLogin = "mtkadmin";
+  sqlAdministratorLoginPassword = $rdpPassword;
+  transparentDataEncryption = "Enabled";
+}
+New-AzureRmResourceGroupDeployment `
+  -ResourceGroupName $ResourceGroupName `
+  -TemplateFile "$PSScriptRoot\..\dbdeploy.json" `
+  -Mode Incremental `
+  -TemplateParameterObject $dbParameters `
+  -Verbose
+
+$queueParameters = @{
+  serviceBusNamespaceName = "mtk-sf-ns";
+  serviceBusQueueName = "mtk-sf-queue";
+}
+New-AzureRmResourceGroupDeployment `
+  -ResourceGroupName $ResourceGroupName `
+  -TemplateFile "$PSScriptRoot\..\queudeploy.json" `
+  -Mode Incremental `
+  -TemplateParameterObject $queueParameters `
   -Verbose

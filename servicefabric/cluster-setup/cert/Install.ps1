@@ -20,7 +20,7 @@ Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName -ResourceGroupName $Resour
 
 Write-Host "Creating certificate..."
 $certificateName = "$Name-cert"
-$certThumbprint, $certPassword, $certPath = CreateSelfSignedCertificate $certificateName
+$certThumbprint, $certPassword, $certPath = CreateSelfSignedCertificate "$Name.$Location.cloudapp.azure.com"
 $cert = ImportCertificateIntoKeyVault $vaultName $certificateName $certPath $certPassword
 
 Write-Host "Applying cluster template..."
@@ -38,10 +38,32 @@ $armParameters = @{
     durabilityLevel = "Bronze";
     reliabilityLevel = "Bronze";
   }
-
 New-AzureRmResourceGroupDeployment `
   -ResourceGroupName $ResourceGroupName `
   -TemplateFile "$PSScriptRoot\servicefabric.json" `
   -Mode Incremental `
   -TemplateParameterObject $armParameters `
+  -Verbose
+
+$dbParameters = @{
+  sqlAdministratorLogin = "mtkadmin";
+  sqlAdministratorLoginPassword = $rdpPassword;
+  transparentDataEncryption = "Enabled";
+}
+New-AzureRmResourceGroupDeployment `
+  -ResourceGroupName $ResourceGroupName `
+  -TemplateFile "$PSScriptRoot\..\dbdeploy.json" `
+  -Mode Incremental `
+  -TemplateParameterObject $dbParameters `
+  -Verbose
+
+$queueParameters = @{
+  serviceBusNamespaceName = "mtk-sf-ns";
+  serviceBusQueueName = "mtk-sf-queue";
+}
+New-AzureRmResourceGroupDeployment `
+  -ResourceGroupName $ResourceGroupName `
+  -TemplateFile "$PSScriptRoot\..\queudeploy.json" `
+  -Mode Incremental `
+  -TemplateParameterObject $queueParameters `
   -Verbose
