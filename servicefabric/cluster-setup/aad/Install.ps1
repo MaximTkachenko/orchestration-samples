@@ -54,6 +54,7 @@ New-AzureRmResourceGroupDeployment `
   -TemplateParameterObject $armParameters `
   -Verbose
 
+<#
 $dbParameters = @{
   sqlAdministratorLogin = "mtkadmin";
   sqlAdministratorLoginPassword = $rdpPassword;
@@ -76,3 +77,4 @@ New-AzureRmResourceGroupDeployment `
   -Mode Incremental `
   -TemplateParameterObject $queueParameters `
   -Verbose
+#>

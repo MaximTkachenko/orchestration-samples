@@ -21,6 +21,7 @@ Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName -ResourceGroupName $Resour
 Write-Host "Creating certificate..."
 $certificateName = "$Name-cert"
 $certThumbprint, $certPassword, $certPath = CreateSelfSignedCertificate "$Name.$Location.cloudapp.azure.com"
+
 $cert = ImportCertificateIntoKeyVault $vaultName $certificateName $certPath $certPassword
 
 Write-Host "Applying cluster template..."
@@ -45,6 +46,7 @@ New-AzureRmResourceGroupDeployment `
   -TemplateParameterObject $armParameters `
   -Verbose
 
+<#
 $dbParameters = @{
   sqlAdministratorLogin = "mtkadmin";
   sqlAdministratorLoginPassword = $rdpPassword;
@@ -67,3 +69,4 @@ New-AzureRmResourceGroupDeployment `
   -Mode Incremental `
   -TemplateParameterObject $queueParameters `
   -Verbose
+#>

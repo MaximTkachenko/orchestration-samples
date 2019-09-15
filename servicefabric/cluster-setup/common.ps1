@@ -81,6 +81,8 @@ function CreateSelfSignedCertificate([string]$DnsName)
     $t = Export-PfxCertificate -Cert $certContent -FilePath $filePath -Password $securePassword
     Set-Content -Path "$folder\$DnsName.thumb.txt" -Value $thumbprint
     Set-Content -Path "$folder\$DnsName.pwd.txt" -Value $certPassword
+    $base64Cert = [System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes($filePath))
+    Set-Content -Path "$folder\$DnsName.base64.txt" -Value $base64Cert
     Write-Host "  exported."
 
     $thumbprint
@@ -120,6 +122,8 @@ function EnsureSelfSignedCertificate([string]$KeyVaultName, [string]$CertName)
     } else {
         $thumbprint, $password, $localPath = CreateSelfSignedCertificate $CertName
     }
+
+    [System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes($localPath)) | Out-File -FilePath "$PSScriptRoot\$Certname.base64.txt"
 
     #import into vault if needed
     Write-Host "Checking certificate in key vault..."
