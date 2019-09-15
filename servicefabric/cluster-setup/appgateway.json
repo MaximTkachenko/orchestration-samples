@@ -1,0 +1,152 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "applicationGateways_sf_agt_name": {
+            "defaultValue": "sf-agt",
+            "type": "String"
+        },
+        "virtualNetworks_vnet_mtksf_externalid": {
+            "defaultValue": "/subscriptions/4191b0ab-271d-470c-850c-3583bfb5ec22/resourceGroups/ASF-mtksf/providers/Microsoft.Network/virtualNetworks/vnet-mtksf",
+            "type": "String"
+        },
+        "publicIPAddresses_agt_ip_externalid": {
+            "defaultValue": "/subscriptions/4191b0ab-271d-470c-850c-3583bfb5ec22/resourceGroups/ASF-mtksf/providers/Microsoft.Network/publicIPAddresses/agt_ip",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/applicationGateways",
+            "apiVersion": "2019-06-01",
+            "name": "[parameters('applicationGateways_sf_agt_name')]",
+            "location": "centralus",
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "6a78e01b-4bfe-44e3-a3fb-4b2e58ed7f71",
+                "sku": {
+                    "name": "Standard_v2",
+                    "tier": "Standard_v2"
+                },
+                "gatewayIPConfigurations": [
+                    {
+                        "name": "appGatewayIpConfig",
+                        "etag": "W/\"8bfbcc91-2991-4dcb-901f-cd568ca38cf9\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "subnet": {
+                                "id": "[concat(parameters('virtualNetworks_vnet_mtksf_externalid'), '/subnets/agt_subnet')]"
+                            }
+                        },
+                        "type": "Microsoft.Network/applicationGateways/gatewayIPConfigurations"
+                    }
+                ],
+                "sslCertificates": [],
+                "trustedRootCertificates": [],
+                "frontendIPConfigurations": [
+                    {
+                        "name": "appGwPublicFrontendIp",
+                        "etag": "W/\"8bfbcc91-2991-4dcb-901f-cd568ca38cf9\"",
+                        "type": "Microsoft.Network/applicationGateways/frontendIPConfigurations",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[parameters('publicIPAddresses_agt_ip_externalid')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendPorts": [
+                    {
+                        "name": "port_80",
+                        "etag": "W/\"8bfbcc91-2991-4dcb-901f-cd568ca38cf9\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "port": 80
+                        },
+                        "type": "Microsoft.Network/applicationGateways/frontendPorts"
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "sf_lb",
+                        "etag": "W/\"8bfbcc91-2991-4dcb-901f-cd568ca38cf9\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "backendAddresses": [
+                                {
+                                    "fqdn": "168.61.180.246"
+                                }
+                            ]
+                        },
+                        "type": "Microsoft.Network/applicationGateways/backendAddressPools"
+                    }
+                ],
+                "backendHttpSettingsCollection": [
+                    {
+                        "name": "my_httpsetting",
+                        "etag": "W/\"8bfbcc91-2991-4dcb-901f-cd568ca38cf9\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "port": 80,
+                            "protocol": "Http",
+                            "cookieBasedAffinity": "Disabled",
+                            "pickHostNameFromBackendAddress": false,
+                            "requestTimeout": 20
+                        },
+                        "type": "Microsoft.Network/applicationGateways/backendHttpSettingsCollection"
+                    }
+                ],
+                "httpListeners": [
+                    {
+                        "name": "main",
+                        "etag": "W/\"8bfbcc91-2991-4dcb-901f-cd568ca38cf9\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_sf_agt_name')), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
+                            },
+                            "frontendPort": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_sf_agt_name')), '/frontendPorts/port_80')]"
+                            },
+                            "protocol": "Http",
+                            "requireServerNameIndication": false
+                        },
+                        "type": "Microsoft.Network/applicationGateways/httpListeners"
+                    }
+                ],
+                "urlPathMaps": [],
+                "requestRoutingRules": [
+                    {
+                        "name": "main",
+                        "etag": "W/\"8bfbcc91-2991-4dcb-901f-cd568ca38cf9\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "ruleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_sf_agt_name')), '/httpListeners/main')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_sf_agt_name')), '/backendAddressPools/sf_lb')]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_sf_agt_name')), '/backendHttpSettingsCollection/my_httpsetting')]"
+                            }
+                        },
+                        "type": "Microsoft.Network/applicationGateways/requestRoutingRules"
+                    }
+                ],
+                "probes": [],
+                "rewriteRuleSets": [],
+                "redirectConfigurations": [],
+                "enableHttp2": false,
+                "autoscaleConfiguration": {
+                    "minCapacity": 2,
+                    "maxCapacity": 10
+                }
+            }
+        }
+    ]
+}

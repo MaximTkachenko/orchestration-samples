@@ -222,25 +222,6 @@
             }
           },
           {
-            "name": "LBSFReverseProxyRule",
-            "properties": {
-              "backendAddressPool": {
-                "id": "[variables('lbPoolID0')]"
-              },
-              "backendPort": "[variables('reverseProxyEndpointPort')]",
-              "enableFloatingIP": false,
-              "frontendIPConfiguration": {
-                "id": "[variables('lbIPConfig0')]"
-              },
-              "frontendPort": "[variables('reverseProxyEndpointPort')]",
-              "idleTimeoutInMinutes": 5,
-              "probe": {
-                "id": "[concat(variables('lbID0'),'/probes/SFReverseProxyProbe')]"
-              },
-              "protocol": "Tcp"
-            }
-          },
-          {
             "name": "AppRule",
             "properties": {
               "backendAddressPool": {
@@ -280,12 +261,11 @@
             }
           },
           {
-            "name": "SFReverseProxyProbe",
-            "description": "for more see https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reverseproxy",
+            "name": "AppProbe",
             "properties": {
               "intervalInSeconds": 5,
               "numberOfProbes": 2,
-              "port": "[variables('reverseProxyEndpointPort')]",
+              "port": 8282,
               "protocol": "Tcp"
             }
           }
