@@ -87,6 +87,7 @@
     "lbPoolID0": "[concat(variables('lbID0'), '/backendAddressPools/LoadBalancerBEAddressPool')]",
     "lbProbeID0": "[concat(variables('lbID0'), '/probes/FabricGatewayProbe')]",
     "lbHttpProbeID0": "[concat(variables('lbID0'), '/probes/FabricHttpGatewayProbe')]",
+    "lbAppProbe": "[concat(variables('lbID0'), '/probes/AppProbe')]",
     "lbNatPoolID0": "[concat(variables('lbID0'), '/inboundNatPools/LoadBalancerBEAddressNatPool')]",
     "vmNodeType0Name": "Primary",
     "vmNodeType0Id": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', variables('vmNodeType0Name'))]",
@@ -235,7 +236,7 @@
               "frontendPort": 80,
               "idleTimeoutInMinutes": 5,
               "probe": {
-                "id": "[variables('lbHttpProbeID0')]"
+                "id": "[variables('lbAppProbe')]"
               },
               "protocol": "Tcp"
             }
