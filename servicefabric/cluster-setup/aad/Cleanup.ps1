@@ -10,4 +10,4 @@ Remove-AzureRmResourceGroup -Name "ASF-$Name"
 
 $tenant = Get-AzureRmTenant
 
-.\CleanupApplications.ps1 -TenantId $tenant.Id
+.\CleanupApplications.ps1 -TenantId $tenant.Id -ClusterName $Name
