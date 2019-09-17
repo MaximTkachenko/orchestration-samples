@@ -14,7 +14,7 @@ Try
 {
     # Install latest AD client library
     $ADPackage = "Microsoft.IdentityModel.Clients.ActiveDirectory"
-    & nuget.exe install -OutputDirectory ".\dll" $ADPackage > nuget.log
+    & nuget.exe install -Version "2.22.302111727" -OutputDirectory ".\dll" $ADPackage > nuget.log
 
     # Target .NET Framework version of the DLL
     $FilePath = (Get-Item .\\dll\\Microsoft.IdentityModel.Clients.ActiveDirectory.[0-9].[0-9].[0-9]\\lib\\net[0-9][0-9]\\Microsoft.IdentityModel.Clients.ActiveDirectory.dll).FullName | Resolve-Path -Relative
@@ -33,9 +33,7 @@ function GetRESTHeaders()
     
     $authenticationContext = New-Object Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext -ArgumentList $authString, $FALSE
     
-    $PromptBehavior = [Microsoft.IdentityModel.Clients.ActiveDirectory.PromptBehavior]::RefreshSession
-    $PlatformParameters = New-Object Microsoft.IdentityModel.Clients.ActiveDirectory.PlatformParameters -ArgumentList $PromptBehavior
-    $accessToken = $authenticationContext.AcquireTokenAsync($resourceUrl, $clientId, $redirectUrl, $PlatformParameters).Result.AccessToken
+    $accessToken = $authenticationContext.AcquireToken($resourceUrl, $clientId, $redirectUrl, [Microsoft.IdentityModel.Clients.ActiveDirectory.PromptBehavior]::RefreshSession).AccessToken
 
     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
     $headers.Add("Authorization", $accessToken)
