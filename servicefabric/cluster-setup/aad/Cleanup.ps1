@@ -6,10 +6,8 @@ param(
 
 CheckLoggedIn
 
-$ResourceGroupName = "ASF-$Name"
+#Remove-AzureRmResourceGroup -Name "ASF-$Name"
 
 $tenant = Get-AzureRmTenant
 
-Remove-AzureRmResourceGroup -Name $ResourceGroupName
-
-.\CleanupApplications.ps1 -TenantId $tenant.Id -WebApplicationName '$Name-Client' -NativeClientApplicationName '$Name-Cluster'
+.\CleanupApplications.ps1 -TenantId $tenant.Id

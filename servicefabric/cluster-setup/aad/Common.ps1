@@ -12,12 +12,7 @@ if($headers){
 
 Try
 {
-    # Install latest AD client library
-    $ADPackage = "Microsoft.IdentityModel.Clients.ActiveDirectory"
-    & nuget.exe install -Version "2.22.302111727" -OutputDirectory ".\dll" $ADPackage > nuget.log
-
-    # Target .NET Framework version of the DLL
-    $FilePath = (Get-Item .\\dll\\Microsoft.IdentityModel.Clients.ActiveDirectory.[0-9].[0-9].[0-9]\\lib\\net[0-9][0-9]\\Microsoft.IdentityModel.Clients.ActiveDirectory.dll).FullName | Resolve-Path -Relative
+    $FilePath = (Get-Item .\\dll\\Microsoft.IdentityModel.Clients.ActiveDirectory.dll).FullName | Resolve-Path -Relative
     Add-Type -Path $FilePath
 }
 Catch
