@@ -329,4 +329,4 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /servicefabric/cluster-setup/aad/dll/
-/servicefabric/cluster-setup/certificate_details
+/servicefabric/cluster-setup/cert/certificate_details

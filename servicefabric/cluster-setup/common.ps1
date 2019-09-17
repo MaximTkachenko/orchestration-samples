@@ -59,7 +59,7 @@ function CreateSelfSignedCertificate([string]$DnsName)
 {
     Write-Host "Creating self-signed certificate with dns name $DnsName"
     
-    $folder = "$PSScriptRoot\certificate_details"
+    $folder = "$PSScriptRoot\cert\certificate_details"
     If(!(test-path $folder))
     {
         New-Item -ItemType Directory -Force -Path $folder
