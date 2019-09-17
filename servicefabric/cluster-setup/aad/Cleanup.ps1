@@ -6,7 +6,7 @@ param(
 
 CheckLoggedIn
 
-#Remove-AzureRmResourceGroup -Name "ASF-$Name"
+Remove-AzureRmResourceGroup -Name "ASF-$Name"
 
 $tenant = Get-AzureRmTenant
 
