@@ -1,0 +1,21 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/gw/{everything}",
+      "UpstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamScheme": "http",
+      "ServiceName": "SfSampleApp/SfSampleApp.InternalApi"
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 19081,
+      "Type": "ServiceFabric"
+    }
+  }
+}
