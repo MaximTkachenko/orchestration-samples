@@ -18,24 +18,11 @@ namespace SfSampleApp.ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOcelot();
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer("myd", options =>
                 {
                     options.Authority = "https://login.microsoftonline.com/6b9be1b6-4f80-4ce7-8479-16c4d7726470/";
-                    options.RequireHttpsMetadata = true;
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidAudience = "api://34019183-153b-463f-9b32-528583498700",
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuer = true
-
-                    };
+                    options.Audience = "api://34019183-153b-463f-9b32-528583498700";
                 });
         }
 
@@ -46,6 +33,13 @@ namespace SfSampleApp.ApiGateway
             {
                 AuthorisationMiddleware = async (ctx, next) =>
                 {
+                    if (ctx.DownstreamReRoute.AuthenticationOptions.AllowedScopes == null
+                        || ctx.DownstreamReRoute.AuthenticationOptions.AllowedScopes.Count == 0)
+                    {
+                        await next.Invoke();
+                        return;
+                    }
+
                     var scope = ctx.DownstreamReRoute.AuthenticationOptions.AllowedScopes[0];
                     if (ctx.HttpContext.User.Claims.Any(x => x.Type == ClaimTypes.Role && x.Value == scope))
                     {
