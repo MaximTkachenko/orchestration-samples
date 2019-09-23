@@ -1,13 +1,17 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/gw/{everything}",
-      "UpstreamPathTemplate": "/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/gw/{everything}",
       "UpstreamHttpMethod": [
         "Get"
       ],
       "DownstreamScheme": "http",
-      "ServiceName": "SfSampleApp/SfSampleApp.InternalApi"
+      "ServiceName": "SfSampleApp/SfSampleApp.InternalApi",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "myd",
+        "AllowedScopes": [ "myTestRole" ]
+      }
     }
   ],
   "GlobalConfiguration": {
