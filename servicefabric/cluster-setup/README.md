@@ -1,2 +1,2 @@
-- `aad` folder - install using AAD to access the cluster
+- `aad` folder - install using AAD to access the cluster (RECOMMENDED)
 - `cert` folder - install using client certificates to access the cluster
