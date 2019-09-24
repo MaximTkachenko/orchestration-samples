@@ -7,7 +7,7 @@
         "Get"
       ],
       "DownstreamScheme": "http",
-      "ServiceName": "SfSampleApp/SfSampleApp.InternalApi",
+      "ServiceName": "SfSampleApp/SfSampleApp.InternalApiType",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "myd",
         "AllowedScopes": [ "myTestRole" ]
