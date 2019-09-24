@@ -87,7 +87,8 @@
     "lbPoolID0": "[concat(variables('lbID0'), '/backendAddressPools/LoadBalancerBEAddressPool')]",
     "lbProbeID0": "[concat(variables('lbID0'), '/probes/FabricGatewayProbe')]",
     "lbHttpProbeID0": "[concat(variables('lbID0'), '/probes/FabricHttpGatewayProbe')]",
-    "lbAppProbe": "[concat(variables('lbID0'), '/probes/AppProbe')]",
+    "lbWebProbe": "[concat(variables('lbID0'), '/probes/WebProbe')]",
+    "lbOcelotProbe": "[concat(variables('lbID0'), '/probes/OcelotProbe')]",
     "lbNatPoolID0": "[concat(variables('lbID0'), '/inboundNatPools/LoadBalancerBEAddressNatPool')]",
     "vmNodeType0Name": "Primary",
     "vmNodeType0Id": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', variables('vmNodeType0Name'))]",
@@ -223,7 +224,7 @@
             }
           },
           {
-            "name": "AppRule",
+            "name": "WebRule",
             "properties": {
               "backendAddressPool": {
                 "id": "[variables('lbPoolID0')]"
@@ -236,7 +237,26 @@
               "frontendPort": 80,
               "idleTimeoutInMinutes": 5,
               "probe": {
-                "id": "[variables('lbAppProbe')]"
+                "id": "[variables('lbWebProbe')]"
+              },
+              "protocol": "Tcp"
+            }
+          },
+          {
+            "name": "OcelotRule",
+            "properties": {
+              "backendAddressPool": {
+                "id": "[variables('lbPoolID0')]"
+              },
+              "backendPort": 8181,
+              "enableFloatingIP": false,
+              "frontendIPConfiguration": {
+                "id": "[variables('lbIPConfig0')]"
+              },
+              "frontendPort": 8080,
+              "idleTimeoutInMinutes": 5,
+              "probe": {
+                "id": "[variables('lbOcelotProbe')]"
               },
               "protocol": "Tcp"
             }
@@ -262,11 +282,20 @@
             }
           },
           {
-            "name": "AppProbe",
+            "name": "WebProbe",
             "properties": {
               "intervalInSeconds": 5,
               "numberOfProbes": 2,
               "port": 8282,
+              "protocol": "Tcp"
+            }
+          },
+          {
+            "name": "OcelotProbe",
+            "properties": {
+              "intervalInSeconds": 5,
+              "numberOfProbes": 2,
+              "port": 8181,
               "protocol": "Tcp"
             }
           }
