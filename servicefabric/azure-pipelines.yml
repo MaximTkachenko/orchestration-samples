@@ -8,7 +8,7 @@ pool:
   - Cmd
 
 variables:
-  BuildPlatform: 'x64'
+  BuildPlatform: 'Any CPU'
   BuildConfiguration: 'Release'
   Solution: 'servicefabric/src/SfSample.sln'
   ServiceFabricProject: 'servicefabric/src/SfSampleApp/SfSampleApp.sfproj'
