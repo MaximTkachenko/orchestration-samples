@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Fabric;
 using System.IO;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.ServiceFabric;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +39,7 @@ namespace SfSampleApp.ApiGateway
                                     .ConfigureServices(
                                         services => services
                                             .AddSingleton<StatelessServiceContext>(serviceContext)
+                                            .AddSingleton<ITelemetryInitializer>((serviceProvider) => FabricTelemetryInitializerExtension.CreateFabricTelemetryInitializer(serviceContext))
                                             .AddApplicationInsightsTelemetry())
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .ConfigureAppConfiguration((hostingContext, config) =>

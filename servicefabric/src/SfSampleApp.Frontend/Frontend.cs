@@ -28,6 +28,7 @@ namespace SfSampleApp.Frontend
         {
             return new ServiceInstanceListener[]
             {
+                
                 new ServiceInstanceListener(serviceContext =>
                     new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
                     {
@@ -38,6 +39,7 @@ namespace SfSampleApp.Frontend
                                     .ConfigureServices(
                                         services => services
                                             .AddSingleton<StatelessServiceContext>(serviceContext)
+                                            .AddSingleton<ITelemetryInitializer>((serviceProvider) => FabricTelemetryInitializerExtension.CreateFabricTelemetryInitializer(serviceContext))
                                             .AddApplicationInsightsTelemetry())
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseStartup<Startup>()
