@@ -26,7 +26,7 @@ $cert = ImportCertificateIntoKeyVault $vaultName $certificateName $certPath $cer
 
 Write-Host "Applying cluster template..."
 
-Start-Sleep -Seconds 10 # need to wait for certificate creation
+Start-Sleep -Seconds 20 # need to wait for certificate creation
 $cert = Get-AzureKeyVaultCertificate -VaultName $vaultName -Name $certificateName
 
 $armParameters = @{

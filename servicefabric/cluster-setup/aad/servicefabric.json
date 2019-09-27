@@ -360,12 +360,15 @@
                 }
               },
               {
-                "publisher": "Microsoft.Compute",
-                "type": "CustomScriptExtension",
-                "typeHandlerVersion": "1.9",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "commandToExecute": "[concat('SETX APPINSIGHTS_INSTRUMENTATIONKEY ', reference(concat('microsoft.insights/components/', parameters('aiName'))).InstrumentationKey, ' /m')]"
+                "name": "[concat('SetEnvironmentVariablesVmExt', '_', variables('vmNodeType0Name'))]",
+                "properties": {
+                  "publisher": "Microsoft.Compute",
+                  "type": "CustomScriptExtension",
+                  "typeHandlerVersion": "1.9",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                      "commandToExecute": "[concat('SETX APPINSIGHTS_INSTRUMENTATIONKEY ', reference(concat('microsoft.insights/components/', parameters('aiName'))).InstrumentationKey, ' /m')]"
+                  }
                 }
               },
               {
