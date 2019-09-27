@@ -32,9 +32,7 @@
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[SfSampleApp.Frontend_ASPNETCORE_ENVIRONMENT]" />
     </EnvironmentOverrides>
   </ServiceManifestImport>
-  <!-- DON'T USE DefaultServices ON PRODUCTION -->
-  <!--<DefaultServices>
-    -->
+  <!--<DefaultServices>-->
   <!-- The section below creates instances of service types, when an instance of this 
          application type is created. You can also create one or more instances of service type using the 
          ServiceFabric PowerShell module.
@@ -57,5 +55,4 @@
       </StatelessService>
     </Service>
   </DefaultServices>-->
-  <!-- DON'T USE DefaultServices ON PRODUCTION -->
 </ApplicationManifest>
