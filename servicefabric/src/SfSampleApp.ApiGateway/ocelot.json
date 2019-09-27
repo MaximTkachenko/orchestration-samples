@@ -3,9 +3,7 @@
     {
       "DownstreamPathTemplate": "/{everything}",
       "UpstreamPathTemplate": "/gw/{everything}",
-      "UpstreamHttpMethod": [
-        "Get"
-      ],
+      "UpstreamHttpMethod": [ "Get", "Post" ],
       "DownstreamScheme": "http",
       "ServiceName": "SfSampleApp/SfSampleApp.InternalApiType",
       "AuthenticationOptions": {

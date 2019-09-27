@@ -360,6 +360,15 @@
                 }
               },
               {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.9",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "commandToExecute": "[concat('SETX APPINSIGHTS_INSTRUMENTATIONKEY ', reference(concat('microsoft.insights/components/', parameters('aiName'))).InstrumentationKey, ' /m')]"
+                }
+              },
+              {
                 "name": "[concat('VMDiagnosticsVmExt', '_', variables('vmNodeType0Name'))]",
                 "properties": {
                   "type": "IaaSDiagnostics",
