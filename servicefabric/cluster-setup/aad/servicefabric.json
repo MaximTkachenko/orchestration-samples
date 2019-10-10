@@ -372,18 +372,6 @@
                 }
               },
               {
-                "name": "[concat('SetAspnetcoreEnvironmentVariablesVmExt', '_', variables('vmNodeType0Name'))]",
-                "properties": {
-                  "publisher": "Microsoft.Compute",
-                  "type": "CustomScriptExtension",
-                  "typeHandlerVersion": "1.9",
-                  "autoUpgradeMinorVersion": true,
-                  "settings": {
-                      "commandToExecute": "[concat('SETX ASPNETCORE_ENVIRONMENT ', 'Development', ' /m')]"
-                  }
-                }
-              },
-              {
                 "name": "[concat('VMDiagnosticsVmExt', '_', variables('vmNodeType0Name'))]",
                 "properties": {
                   "type": "IaaSDiagnostics",
